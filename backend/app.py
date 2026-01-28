@@ -1,7 +1,8 @@
-from typing import List, Literal
+from typing import List, Literal, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from word_store import list_categories, pick_daily_word
 
 LetterStatus = Literal["correct", "present", "absent"]
 
@@ -18,9 +19,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Temporary hardcoded answer
-ANSWER = "CRANE"
-
 
 class GuessIn(BaseModel):
     guess: str = Field(min_length=5, max_length=5)
@@ -33,6 +31,10 @@ class GuessOut(BaseModel):
 @app.get("/api/health")
 def health():
     return {"ok": True}
+
+@app.get("/api/categories")
+def categories():
+    return {"categories": list_categories()}
 
 
 def evaluate_guess(answer: str, guess: str) -> List[LetterStatus]:
@@ -71,8 +73,10 @@ def evaluate_guess(answer: str, guess: str) -> List[LetterStatus]:
 
 
 @app.post("/api/guess", response_model=GuessOut)
-def guess(payload: GuessIn):
+def guess(payload: GuessIn, category: Optional[str] = None):
     g = payload.guess.strip().upper()
     if len(g) != 5 or not g.isalpha():
         raise HTTPException(status_code=400, detail="Guess must be 5 letters A-Z.")
-    return {"result": evaluate_guess(ANSWER, g)}
+
+    answer = pick_daily_word(category=category)
+    return {"result": evaluate_guess(answer, g)}

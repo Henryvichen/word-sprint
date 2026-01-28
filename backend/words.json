@@ -1,0 +1,19 @@
+[
+  { "word": "CRANE", "tags": ["common"] },
+  { "word": "BLAME", "tags": ["common"] },
+  { "word": "SHINE", "tags": ["common"] },
+  { "word": "STONE", "tags": ["common"] },
+  { "word": "PLANT", "tags": ["common"] },
+
+  { "word": "GHOST", "tags": ["spooky"] },
+  { "word": "WITCH", "tags": ["spooky"] },
+
+  { "word": "MAGIC", "tags": ["fantasy"] },
+  { "word": "SWORD", "tags": ["fantasy"] },
+
+  { "word": "PIXEL", "tags": ["gaming"] },
+  { "word": "QUEST", "tags": ["gaming", "fantasy"] },
+
+  { "word": "SUSHI", "tags": ["food"] },
+  { "word": "BREAD", "tags": ["food"] }
+]
