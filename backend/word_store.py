@@ -13,23 +13,22 @@ class WordItem:
 
 
 WORDS_PATH = Path(__file__).parent / "words.json"
-# TODO: Ask james
 
 
 def _load_items() -> List[WordItem]:
-    raw = json.loads(WORDS_PATH.read_text(encoding="utf-8"))
-    items: List[WordItem] = []
-    for x in raw:
-        items.append(WordItem(word=str(x["word"]).upper(), tags=list(x.get("tags", []))))
-    return items
+    with open(WORDS_PATH, encoding="utf-8") as f:
+        raw = json.load(f)
+
+    return [
+        WordItem(word=x["word"].upper(), tags=x.get("tags", []))
+        for x in raw
+    ]
+
 
 
 def list_categories() -> List[str]:
     items = _load_items()
-    tags: Set[str] = set()
-    for item in items:
-        for t in item.tags:
-            tags.add(t)
+    tags = {t for item in items for t in item.tags}
     return sorted(tags)
 
 
@@ -55,4 +54,3 @@ def pick_daily_word(category: Optional[str] = None, day: Optional[date] = None) 
     digest = hashlib.sha256(day.isoformat().encode("utf-8")).hexdigest()
     idx = int(digest[:8], 16) % len(items)
     return items[idx].word
-# TODO: Ask james
