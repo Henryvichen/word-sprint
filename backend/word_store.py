@@ -19,10 +19,26 @@ def _load_items() -> List[WordItem]:
     with open(WORDS_PATH, encoding="utf-8") as f:
         raw = json.load(f)
 
-    return [
-        WordItem(word=x["word"].upper(), tags=x.get("tags", []))
-        for x in raw
-    ]
+    items: List[WordItem] = []
+
+    for entry in raw:
+        word = entry.get("word")
+        tags = entry.get("tags", [])
+
+        if not isinstance(word, str):
+            continue
+
+        word = word.strip().upper()
+
+        if len(word) != 5 or not word.isalpha():
+            continue
+
+        if not isinstance(tags, list):
+            tags = []
+
+        items.append(WordItem(word=word, tags=tags))
+
+    return items
 
 
 
