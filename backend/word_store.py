@@ -66,7 +66,10 @@ def pick_daily_word(category: Optional[str] = None, day: Optional[date] = None) 
     if day is None:
         day = date.today()
 
+    category_key = category or "all"
+    hash_key = f"{day.isoformat()}:{category_key}"
+
     # Stable, deterministic index for the day
-    digest = hashlib.sha256(day.isoformat().encode("utf-8")).hexdigest()
+    digest = hashlib.sha256(hash_key.encode("utf-8")).hexdigest()
     idx = int(digest[:8], 16) % len(items)
     return items[idx].word
