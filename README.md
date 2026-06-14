@@ -5,7 +5,7 @@ The project demonstrates full-stack development, API design, and correct duplica
 
 The project was developed as part of my AI-Enhanced Projects portfolio work, where AI was used to accelerate scaffolding, planning, and iterative development while I refined the frontend behavior, backend validation, game state flow, and application architecture.
 
----
+<img width="576" height="743" alt="wordsprint" src="https://github.com/user-attachments/assets/42c67643-464b-447a-980e-d730b93150ba" />
 
 ## Tech Stack
 
