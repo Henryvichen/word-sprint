@@ -222,7 +222,10 @@ export default function App() {
           <select
             id="category"
             value={selectedCategory}
-            onChange={(e) => handleCategoryChange(e.target.value)}
+            onChange={(e) => {
+              handleCategoryChange(e.target.value);
+              e.currentTarget.blur();
+            }}
           >
             {categories.map((category) => (
               <option key={category} value={category}>
